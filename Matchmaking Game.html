@@ -1,0 +1,73 @@
+<html>
+
+<head>
+<style>
+#rightSide {
+  left: 500px;
+  border-left: 1px solid black;
+}
+div {
+  width: 500px;
+  height: 500px;
+  position: absolute;
+}
+img {
+  position: absolute;
+}
+</style>
+<script>
+	var numberOfFaces = 5;
+	
+function generateFaces() {
+   var theLeftSide = document.getElementById("leftSide");
+    var theRightSide = document.getElementById("rightSide");
+    var theBody = document.getElementsByTagName("body")[0];
+   
+   for (i = 0; i < numberOfFaces; i++) {
+     var img = document.createElement('img');
+     img.src = 'http://icons.iconarchive.com/icons/hopstarter/keriyo-emoticons/128/Smiley-icon.png';
+	 img.style.top = Math.floor(Math.random() * 360);
+	 img.style.left = Math.floor(Math.random() * 360);
+	 theLeftSide.appendChild(img);
+   }
+   leftSideImages = theLeftSide.cloneNode(true);
+   leftSideImages.removeChild(leftSideImages.lastChild);
+   theRightSide.appendChild(leftSideImages);
+   
+theLeftSide.lastChild.onclick=
+    function nextLevel(event){
+        event.stopPropagation();
+		while(theLeftSide.firstChild ){
+		theLeftSide.removeChild(theLeftSide.firstChild)
+		}
+		while(theRightSide.firstChild ){
+		theRightSide.removeChild(theRightSide.firstChild)
+		}
+		numberOfFaces += 5;
+		console.log(numberOfFaces);
+		generateFaces();
+		}
+		
+theBody.onclick = function gameOver() {
+    alert("Game Over!");
+    theBody.onclick = null;
+    theLeftSide.lastChild.onclick = null;
+};
+}
+		
+</script>
+
+</head>
+
+<body onload ="generateFaces()">
+  <h1> Matching Game</h1>
+
+  <h5>Click on the extra smiling face on the left.</h5>
+
+  <div id="leftSide"></div>
+
+  <div id="rightSide"></div>
+
+</body>
+
+</html>
